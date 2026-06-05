@@ -7,12 +7,14 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { useI18n } from '@/lib/i18n/context';
 import { EASE } from '@/lib/animations';
-import Wordmark from './Wordmark';
+import Logo from './Logo';
 import LanguageToggle from './LanguageToggle';
 
 export default function Nav() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const pathname = usePathname();
+  const logoAlt =
+    locale === 'bg' ? 'We Can — Решения за консервиране' : 'We Can — Canning Solutions';
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -45,7 +47,13 @@ export default function Nav() {
       }`}
     >
       <nav className="container-site flex h-16 items-center justify-between md:h-20">
-        <Wordmark />
+        <Logo
+          variant="dark"
+          heightClass="h-9 md:h-12"
+          priority
+          interactive
+          alt={logoAlt}
+        />
 
         {/* Center links — desktop */}
         <ul className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 md:flex">

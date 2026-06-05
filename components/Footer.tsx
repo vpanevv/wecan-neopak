@@ -2,20 +2,21 @@
 
 import Link from 'next/link';
 import { useI18n } from '@/lib/i18n/context';
+import Logo from './Logo';
 
 export default function Footer() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
+  const logoAlt =
+    locale === 'bg' ? 'We Can — Решения за консервиране' : 'We Can — Canning Solutions';
 
   return (
     <footer className="bg-ink text-canvas">
       <div className="container-site py-16 md:py-20">
         <div className="grid gap-12 md:grid-cols-3 md:gap-8">
-          {/* Wordmark + tagline */}
+          {/* Logo (light, for the dark footer) + tagline */}
           <div className="max-w-xs">
-            <div className="font-display text-xl font-semibold tracking-tight">
-              WE CAN <span className="text-aluminum">Ltd.</span>
-            </div>
-            <p className="mt-4 text-sm leading-relaxed text-aluminum">
+            <Logo variant="light" heightClass="h-16" href={null} alt={logoAlt} />
+            <p className="mt-5 text-sm leading-relaxed text-aluminum">
               {t.footer.wordmarkTagline}
             </p>
           </div>

@@ -102,6 +102,22 @@ Search the codebase for `TODO`:
 - Product & facility photography (`lib/images.ts`, `CanComposition`)
 - The site URL `https://wecan.bg` (used in metadata, sitemap, robots) if different
 
+## Logo
+
+The brand mark lives in `/public`:
+
+- `logo-wecan.png` — navy mark on transparency, for light backgrounds (navbar)
+- `logo-wecan-light.png` — off-white mark on transparency, for the dark footer
+
+Both were generated from the client's white-background PNG by keying out the white
+with a soft edge ramp and trimming to content (see `components/Logo.tsx`). The shared
+`Logo` component is used in the navbar (navy, links home, subtle hover) and footer
+(light). The home hero is intentionally logo-free — the transparent navbar already
+presents the mark over the hero, and the split asymmetric layout keeps the headline as
+the hero. To add a hero logo, drop a `<Logo>` into `components/home/Hero.tsx`.
+
+> **TODO:** Replace with a transparent PNG/SVG master from the client for best results.
+
 ## Performance & accessibility
 
 - All animations are GPU-accelerated (transform/opacity only)
