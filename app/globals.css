@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --canvas: #fafafa;
+    --cream: #f0efec;
+    --ink: #0f1011;
+    --muted: #6b6e72;
+    --aluminum: #b0b5b8;
+    --ember: #e85d2f;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--canvas);
+    color: var(--ink);
+    font-feature-settings: 'kern', 'liga', 'calt';
+  }
+
+  ::selection {
+    background-color: var(--ink);
+    color: var(--canvas);
+  }
+
+  /* Respect reduced-motion: neutralize transforms/opacity transitions. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* Small caps tracked labels above section headings. */
+  .label {
+    @apply font-sans text-xs font-medium uppercase tracking-label text-muted;
+  }
+
+  /* Headline base — editorial, tight, confident. */
+  .headline {
+    @apply font-display font-medium tracking-tight;
+  }
+
+  /* Primary near-black CTA. */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-ink px-7 py-3.5
+      font-sans text-sm font-medium text-canvas transition-transform duration-300
+      ease-intent hover:scale-[1.02] focus-visible:outline focus-visible:outline-2
+      focus-visible:outline-offset-2 focus-visible:outline-ink;
+  }
+
+  .btn-primary-invert {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-canvas px-7 py-3.5
+      font-sans text-sm font-medium text-ink transition-transform duration-300
+      ease-intent hover:scale-[1.02] focus-visible:outline focus-visible:outline-2
+      focus-visible:outline-offset-2 focus-visible:outline-canvas;
+  }
+
+  /* Secondary text link with arrow. Add the `group` class in markup for the
+     arrow hover effect — `group` can't be used inside @apply. */
+  .btn-link {
+    @apply inline-flex items-center gap-1.5 font-sans text-sm font-medium text-ink
+      transition-colors duration-300 hover:text-muted focus-visible:outline
+      focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink;
+  }
+}
+
+@layer utilities {
+  /* Generous section rhythm — 120–160px vertical padding on desktop. */
+  .section-y {
+    @apply py-24 md:py-32 lg:py-40;
+  }
+
+  .container-site {
+    @apply mx-auto w-full max-w-6xl px-6 md:px-8;
+  }
+}
