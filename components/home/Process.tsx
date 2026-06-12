@@ -3,14 +3,11 @@
 import { motion } from 'framer-motion';
 import { useI18n } from '@/lib/i18n/context';
 import { staggerContainer, staggerItem, viewportOnce } from '@/lib/animations';
-import { IMAGES } from '@/lib/images';
 import SectionLabel from '@/components/SectionLabel';
 import RevealHeadline from '@/components/RevealHeadline';
-import Reveal from '@/components/Reveal';
-import EditorialImage from '@/components/EditorialImage';
 
 export default function Process() {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
 
   return (
     <section id="process" className="bg-canvas">
@@ -22,18 +19,6 @@ export default function Process() {
             className="headline mt-6 text-3xl text-ink sm:text-4xl md:text-5xl"
           />
         </div>
-
-        {/* Atmospheric facility image */}
-        <Reveal delay={0.1}>
-          <div className="relative mt-14 aspect-[16/7] w-full overflow-hidden rounded-2xl bg-cream">
-            <EditorialImage
-              src={IMAGES.facility.src}
-              alt={IMAGES.facility.alt[locale]}
-              sizes="(max-width: 1024px) 100vw, 72rem"
-              className="object-cover"
-            />
-          </div>
-        </Reveal>
 
         {/* Steps with connecting line */}
         <motion.div

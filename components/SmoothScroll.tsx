@@ -2,8 +2,11 @@
 
 import { useEffect } from 'react';
 import Lenis from '@studio-freight/lenis';
+import { gsap, ScrollTrigger } from '@/lib/gsap';
 
-// Global Lenis smooth scroll. Respects prefers-reduced-motion by skipping setup.
+// Global Lenis smooth scroll, driven by GSAP's ticker so ScrollTrigger and
+// Lenis share one clock (no fighting RAF loops). Respects reduced motion by
+// skipping Lenis entirely — ScrollTrigger then runs off native scroll.
 export default function SmoothScroll() {
   useEffect(() => {
     const prefersReduced = window.matchMedia(
@@ -17,12 +20,14 @@ export default function SmoothScroll() {
       smoothWheel: true,
     });
 
-    let rafId = 0;
-    function raf(time: number) {
-      lenis.raf(time);
-      rafId = requestAnimationFrame(raf);
-    }
-    rafId = requestAnimationFrame(raf);
+    lenis.on('scroll', ScrollTrigger.update);
+
+    const tick = (time: number) => {
+      // gsap ticker time is seconds; Lenis wants ms.
+      lenis.raf(time * 1000);
+    };
+    gsap.ticker.add(tick);
+    gsap.ticker.lagSmoothing(0);
 
     // Let in-page anchor links (footer/nav) use Lenis for smooth jumps.
     function onAnchorClick(e: Event) {
@@ -39,7 +44,7 @@ export default function SmoothScroll() {
     document.addEventListener('click', onAnchorClick);
 
     return () => {
-      cancelAnimationFrame(rafId);
+      gsap.ticker.remove(tick);
       document.removeEventListener('click', onAnchorClick);
       lenis.destroy();
     };

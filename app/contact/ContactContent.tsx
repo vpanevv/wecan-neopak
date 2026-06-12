@@ -5,6 +5,7 @@ import { useI18n } from '@/lib/i18n/context';
 import { fadeUp, EASE } from '@/lib/animations';
 import RevealHeadline from '@/components/RevealHeadline';
 import ContactForm from '@/components/contact/ContactForm';
+import TiltCan from '@/components/cinema/TiltCan';
 
 export default function ContactContent() {
   const { t } = useI18n();
@@ -59,6 +60,19 @@ export default function ContactContent() {
                   <dd className="mt-1.5 text-ink">{c.phoneValue}</dd>
                 </div>
               </dl>
+            </div>
+
+            {/* Floating product accent — desktop only, kept subtle */}
+            <div className="mt-14 hidden lg:block">
+              <TiltCan
+                src="/cans/can-carbonated-sm.png"
+                alt={t.media.canCarbonatedAlt}
+                width={199}
+                height={520}
+                maxTilt={6}
+                className="w-24 opacity-90"
+                sizes="96px"
+              />
             </div>
           </div>
 

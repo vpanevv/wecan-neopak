@@ -20,6 +20,13 @@ export interface Dictionary {
     contact: string;
     cta: string;
   };
+  media: {
+    canCarbonatedAlt: string;
+    canNonCarbonatedAlt: string;
+    promoVideoLabel: string;
+    lineVideoLabel: string;
+    factoryVideoLabel: string;
+  };
   footer: {
     wordmarkTagline: string;
     linksHeading: string;
@@ -38,6 +45,19 @@ export interface Dictionary {
       subhead: string;
       ctaPrimary: string;
       ctaSecondary: string;
+      canCaption: string;
+    };
+    marquee: string[];
+    promo: {
+      label: string;
+      headline: string;
+      body: string;
+    };
+    factory: {
+      label: string;
+      headline: string;
+      body: string;
+      caption: string;
     };
     quote: {
       text: string;
@@ -52,6 +72,7 @@ export interface Dictionary {
       label: string;
       headline: string;
       stats: Stat[];
+      caption: string;
     };
     categories: {
       label: string;
@@ -103,6 +124,7 @@ export interface Dictionary {
         minHeading: string;
         min: string[];
       };
+      videoCaption: string;
     };
     step4: {
       label: string;
@@ -183,6 +205,15 @@ export const dictionary: Record<Locale, Dictionary> = {
       contact: 'Contact',
       cta: 'Request Offer',
     },
+    media: {
+      canCarbonatedAlt:
+        'Voran carbonated energy drink can — produced at the We Can facility',
+      canNonCarbonatedAlt:
+        'Voran non-carbonated energy drink can — produced at the We Can facility',
+      promoVideoLabel: 'Voran energy drink brand video',
+      lineVideoLabel: 'Cans moving along our filling line',
+      factoryVideoLabel: 'Inside our canning facility',
+    },
     footer: {
       wordmarkTagline: 'Bulgarian beverage canning. Built for ambitious brands.',
       linksHeading: 'Navigate',
@@ -202,6 +233,21 @@ export const dictionary: Record<Locale, Dictionary> = {
           'Flexible aluminum can production for energy, functional, sports, and soft drinks. From 15,000-can short runs to full-scale series.',
         ctaPrimary: 'Request a Private Label Offer',
         ctaSecondary: 'Explore capabilities',
+        canCaption: 'Voran Energy — filled & packed at our facility',
+      },
+      marquee: ['Energy Drinks', 'Functional', 'Sports Drinks', 'Soft Drinks'],
+      promo: {
+        label: 'Made to Stand Out',
+        headline: 'Your can is the billboard.',
+        body:
+          'Decoration, finish, and detail engineered so your brand is impossible to ignore — on the shelf and in the hand.',
+      },
+      factory: {
+        label: 'Inside the Facility',
+        headline: 'Real machines. Real cans. Every day.',
+        body:
+          'No renders, no stock footage — this is our line in Bulgaria, filling and packing cans for brands across Europe.',
+        caption: 'Filmed on our production floor',
       },
       quote: {
         text:
@@ -247,6 +293,7 @@ export const dictionary: Record<Locale, Dictionary> = {
           { value: '154M', target: 154, suffix: 'M', label: 'Cans/year · 330/500ml Standard' },
           { value: '3', target: 3, suffix: '', label: 'High-tech filling lines' },
         ],
+        caption: 'Footage from our filling line',
       },
       categories: {
         label: 'Beverage Categories',
@@ -372,6 +419,8 @@ export const dictionary: Record<Locale, Dictionary> = {
           minHeading: 'Minimum order options',
           min: ['15,000 cans', '30,000 cans', '45,000 cans', '60,000 cans'],
         },
+        videoCaption:
+          'Voran Energy — designed, filled, and packed at our facility.',
       },
       step4: {
         label: 'Step 04',
@@ -515,6 +564,15 @@ export const dictionary: Record<Locale, Dictionary> = {
       contact: 'Контакт',
       cta: 'Заявка',
     },
+    media: {
+      canCarbonatedAlt:
+        'Кен Voran газирана енергийна напитка — произведен в завода на We Can',
+      canNonCarbonatedAlt:
+        'Кен Voran негазирана енергийна напитка — произведен в завода на We Can',
+      promoVideoLabel: 'Бранд видео на Voran energy drink',
+      lineVideoLabel: 'Кенове по нашата пълначна линия',
+      factoryVideoLabel: 'В нашия завод за бутилиране',
+    },
     footer: {
       wordmarkTagline: 'Българско бутилиране в кенове. За амбициозни брандове.',
       linksHeading: 'Навигация',
@@ -534,6 +592,21 @@ export const dictionary: Record<Locale, Dictionary> = {
           'Гъвкаво производство в алуминиеви кенове за енергийни, функционални, спортни и безалкохолни напитки. От 15,000 кена кратки серии до пълни производствени серии.',
         ctaPrimary: 'Заявете оферта',
         ctaSecondary: 'Вижте възможностите',
+        canCaption: 'Voran Energy — пълнено и пакетирано в нашия завод',
+      },
+      marquee: ['Енергийни', 'Функционални', 'Спортни', 'Безалкохолни'],
+      promo: {
+        label: 'Създадени да изпъкват',
+        headline: 'Вашият кен е витрината.',
+        body:
+          'Декорация, финиш и детайл, създадени така, че брандът ви да е невъзможен за подминаване — на рафта и в ръката.',
+      },
+      factory: {
+        label: 'Отвътре',
+        headline: 'Истински машини. Истински кенове. Всеки ден.',
+        body:
+          'Без рендери, без стокови кадри — това е нашата линия в България, която пълни и пакетира кенове за брандове от цяла Европа.',
+        caption: 'Заснето в нашия завод',
       },
       quote: {
         text:
@@ -579,6 +652,7 @@ export const dictionary: Record<Locale, Dictionary> = {
           { value: '154M', target: 154, suffix: 'M', label: 'Кена/год · 330/500ml Standard' },
           { value: '3', target: 3, suffix: '', label: 'Високотехнологични линии' },
         ],
+        caption: 'Кадри от нашата пълначна линия',
       },
       categories: {
         label: 'Категории напитки',
@@ -704,6 +778,8 @@ export const dictionary: Record<Locale, Dictionary> = {
           minHeading: 'Опции за минимална поръчка',
           min: ['15,000 кена', '30,000 кена', '45,000 кена', '60,000 кена'],
         },
+        videoCaption:
+          'Voran Energy — дизайн, пълнене и пакетиране в нашия завод.',
       },
       step4: {
         label: 'Стъпка 04',

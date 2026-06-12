@@ -5,6 +5,7 @@ import { Check } from 'lucide-react';
 import { useI18n } from '@/lib/i18n/context';
 import { staggerContainer, staggerItem, viewportOnce } from '@/lib/animations';
 import StepHeader from './StepHeader';
+import AutoVideo from '@/components/cinema/AutoVideo';
 
 function List({ heading, items }: { heading: string; items: string[] }) {
   return (
@@ -73,6 +74,21 @@ export default function Step3Decoration() {
                   </li>
                 ))}
               </ul>
+            </div>
+
+            {/* Real decorated product, in motion */}
+            <div className="mt-10 flex items-center gap-5 border-t border-white/10 pt-8">
+              <div className="w-20 shrink-0 overflow-hidden rounded-lg">
+                <AutoVideo
+                  src="/videos/promo-can.mp4"
+                  poster="/videos/poster-promo.jpg"
+                  label={t.media.promoVideoLabel}
+                  className="aspect-[9/16] w-full object-cover"
+                />
+              </div>
+              <p className="text-sm leading-relaxed text-aluminum">
+                {t.privateLabel.step3.videoCaption}
+              </p>
             </div>
           </motion.div>
         </motion.div>

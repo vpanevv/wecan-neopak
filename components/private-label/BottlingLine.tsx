@@ -16,6 +16,7 @@ import {
 import { useI18n } from '@/lib/i18n/context';
 import { staggerContainer, staggerItem, viewportOnce } from '@/lib/animations';
 import StepHeader from './StepHeader';
+import AutoVideo from '@/components/cinema/AutoVideo';
 
 const ICONS: LucideIcon[] = [
   Droplets,
@@ -34,8 +35,19 @@ export default function BottlingLine() {
   const line = t.privateLabel.line;
 
   return (
-    <section className="bg-ink text-canvas">
-      <div className="container-site section-y">
+    <section className="relative overflow-hidden bg-ink text-canvas">
+      {/* Real filling-line footage, heavily dimmed under the content */}
+      <div className="absolute inset-0" aria-hidden>
+        <AutoVideo
+          src="/videos/line-conveyor.mp4"
+          poster="/videos/poster-line.jpg"
+          label={t.media.lineVideoLabel}
+          className="h-full w-full object-cover opacity-20"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-ink via-ink/80 to-ink" />
+      </div>
+
+      <div className="container-site section-y relative">
         <StepHeader label={line.label} headline={line.headline} invert />
         <motion.div
           variants={staggerContainer}
