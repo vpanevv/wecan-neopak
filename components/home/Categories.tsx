@@ -35,8 +35,9 @@ export default function Categories() {
             // Energy (index 0) gets the sparing ember accent.
             const accent = i === 0;
             return (
+              // Index key: titles are translated — see BottlingLine note.
               <motion.div
-                key={item.title}
+                key={i}
                 variants={staggerItem}
                 className="group bg-cream p-8 transition-colors duration-300 hover:bg-canvas md:p-10"
               >

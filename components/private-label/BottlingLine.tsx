@@ -59,8 +59,10 @@ export default function BottlingLine() {
           {line.items.map((item, i) => {
             const Icon = ICONS[i];
             return (
+              // Index key: titles are translated, and remounting items on a
+              // language switch would leave them stuck in the hidden state.
               <motion.div
-                key={item.title}
+                key={i}
                 variants={staggerItem}
                 className="flex gap-5 border-t border-white/10 pt-6"
               >

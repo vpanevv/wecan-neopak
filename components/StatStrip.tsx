@@ -29,8 +29,10 @@ export default function StatStrip({ stats, dark = false }: StatStripProps) {
       className="grid grid-cols-2 gap-y-12 sm:gap-y-14 md:grid-cols-4 md:gap-y-0"
     >
       {stats.map((stat, i) => (
+        // Index key: labels are translated — remounting on language switch
+        // would hide the stats and reset the counters.
         <motion.div
-          key={stat.label}
+          key={i}
           variants={staggerItem}
           className={`flex flex-col gap-3 md:px-8 ${
             i > 0 ? `md:border-l ${dividerTone}` : ''

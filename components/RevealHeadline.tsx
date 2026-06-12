@@ -21,6 +21,10 @@ export default function RevealHeadline({
 }: RevealHeadlineProps) {
   const lines = Array.isArray(text) ? text : [text];
   const Tag = motion[as];
+  // Remount when the text changes (e.g. language switch) so the reveal
+  // re-runs; otherwise newly added word spans would mount hidden inside an
+  // already-"visible" container and never animate in.
+  const textKey = lines.join('|');
 
   const animateProps = immediate
     ? { initial: 'hidden' as const, animate: 'visible' as const }
@@ -31,7 +35,7 @@ export default function RevealHeadline({
       };
 
   return (
-    <Tag variants={headlineContainer} {...animateProps} className={className}>
+    <Tag key={textKey} variants={headlineContainer} {...animateProps} className={className}>
       {lines.map((line, lineIndex) => (
         <span key={lineIndex} className="block">
           {line.split(' ').map((word, wordIndex) => (

@@ -20,9 +20,10 @@ export default function Step1Beverage() {
           viewport={viewportOnce}
           className="mt-14 grid gap-8 md:grid-cols-2"
         >
-          {step.items.map((item) => (
+          {step.items.map((item, i) => (
+            // Index key: titles are translated — see BottlingLine note.
             <motion.div
-              key={item.title}
+              key={i}
               variants={staggerItem}
               className="rounded-2xl border border-ink/10 bg-cream p-8 md:p-10"
             >
