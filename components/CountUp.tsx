@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useInView } from 'framer-motion';
 
 interface CountUpProps {
@@ -10,6 +10,8 @@ interface CountUpProps {
 }
 
 // Counts up from 0 to target the first time it scrolls into view.
+// Writes straight to the DOM node (no per-frame React re-renders) so the
+// count stays smooth even with video playing behind it.
 // Honors prefers-reduced-motion by snapping straight to the final value.
 export default function CountUp({
   target,
@@ -18,14 +20,14 @@ export default function CountUp({
 }: CountUpProps) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: '-60px' });
-  const [value, setValue] = useState(0);
 
   useEffect(() => {
-    if (!inView) return;
+    const el = ref.current;
+    if (!inView || !el) return;
 
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduce) {
-      setValue(target);
+      el.textContent = `${target}${suffix}`;
       return;
     }
 
@@ -36,19 +38,18 @@ export default function CountUp({
 
     const tick = (now: number) => {
       const progress = Math.min((now - start) / durationMs, 1);
-      setValue(Math.round(easeOutCubic(progress) * target));
+      el.textContent = `${Math.round(easeOutCubic(progress) * target)}${suffix}`;
       if (progress < 1) {
         frame = requestAnimationFrame(tick);
       }
     };
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [inView, target, durationMs]);
+  }, [inView, target, suffix, durationMs]);
 
   return (
     <span ref={ref} className="tabular-nums">
-      {value}
-      {suffix}
+      0{suffix}
     </span>
   );
 }

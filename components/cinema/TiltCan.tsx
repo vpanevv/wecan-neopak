@@ -53,7 +53,7 @@ export default function TiltCan({
         return () => float.kill();
       });
 
-      // Mouse tilt — desktop with a fine pointer.
+      // Mouse tilt + hover zoom — desktop with a fine pointer.
       mm.add(`${MM_DESKTOP} and (pointer: fine)`, () => {
         const el = root.current!;
         const rx = gsap.quickTo(el, 'rotationX', { duration: 0.7, ease: 'power3.out' });
@@ -71,7 +71,30 @@ export default function TiltCan({
           rx(-ny * maxTilt * 0.6);
         };
         window.addEventListener('mousemove', onMove, { passive: true });
-        return () => window.removeEventListener('mousemove', onMove);
+
+        // Hover: ease in slightly oversized, then settle back — a soft
+        // "breathe" rather than a hard scale snap.
+        const onEnter = () => {
+          gsap.timeline({ overwrite: 'auto' })
+            .to(inner.current, { scale: 1.08, duration: 0.45, ease: 'power3.out' })
+            .to(inner.current, { scale: 1.04, duration: 0.5, ease: 'power2.inOut' });
+        };
+        const onLeave = () => {
+          gsap.to(inner.current, {
+            scale: 1,
+            duration: 0.6,
+            ease: 'power3.out',
+            overwrite: 'auto',
+          });
+        };
+        el.addEventListener('mouseenter', onEnter);
+        el.addEventListener('mouseleave', onLeave);
+
+        return () => {
+          window.removeEventListener('mousemove', onMove);
+          el.removeEventListener('mouseenter', onEnter);
+          el.removeEventListener('mouseleave', onLeave);
+        };
       });
     },
     { scope: root },

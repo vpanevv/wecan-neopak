@@ -30,20 +30,34 @@ export default function PromoScene() {
           },
         });
 
+        // Act 1 (0 → 0.5): the film grows from an inset to own the frame,
+        // the headline recedes behind it.
         tl.fromTo(
           q('.promo-video'),
           { scale: 0.52, yPercent: 6 },
-          { scale: 1, yPercent: 0 },
+          { scale: 1, yPercent: 0, duration: 0.5 },
           0,
         )
           .fromTo(
             q('.promo-headline'),
             { scale: 1, autoAlpha: 1 },
-            { scale: 1.08, autoAlpha: 0.16 },
+            { scale: 1.08, autoAlpha: 0.12, duration: 0.5 },
             0,
           )
-          .fromTo(q('.promo-label'), { y: 0 }, { y: -46 }, 0)
-          .fromTo(q('.promo-body'), { y: 0 }, { y: 46 }, 0);
+          // Act 2 (0.62 → 1): the film dissolves upward and hands the frame
+          // back to the headline, so the scene ends on the clean statement.
+          .to(
+            q('.promo-video'),
+            { scale: 1.1, yPercent: -4, autoAlpha: 0, duration: 0.38 },
+            0.62,
+          )
+          .to(
+            q('.promo-headline'),
+            { scale: 1, autoAlpha: 1, duration: 0.34 },
+            0.66,
+          )
+          .fromTo(q('.promo-label'), { y: 0 }, { y: -46, duration: 1 }, 0)
+          .fromTo(q('.promo-body'), { y: 0 }, { y: 46, duration: 1 }, 0);
       });
     },
     { scope: root },

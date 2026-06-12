@@ -74,6 +74,10 @@ export interface Dictionary {
       stats: Stat[];
       caption: string;
     };
+    lineFilm: {
+      label: string;
+      headline: string;
+    };
     categories: {
       label: string;
       headline: string;
@@ -207,10 +211,10 @@ export const dictionary: Record<Locale, Dictionary> = {
     },
     media: {
       canCarbonatedAlt:
-        'Voran carbonated energy drink can — produced at the We Can facility',
+        'Isosport carbonated energy drink can — produced at the We Can facility',
       canNonCarbonatedAlt:
-        'Voran non-carbonated energy drink can — produced at the We Can facility',
-      promoVideoLabel: 'Voran energy drink brand video',
+        'Isosport non-carbonated energy drink can — produced at the We Can facility',
+      promoVideoLabel: 'Isosport energy drink brand video',
       lineVideoLabel: 'Cans moving along our filling line',
       factoryVideoLabel: 'Inside our canning facility',
     },
@@ -233,7 +237,7 @@ export const dictionary: Record<Locale, Dictionary> = {
           'Flexible aluminum can production for energy, functional, sports, and soft drinks. From 15,000-can short runs to full-scale series.',
         ctaPrimary: 'Request a Private Label Offer',
         ctaSecondary: 'Explore capabilities',
-        canCaption: 'Voran Energy — filled & packed at our facility',
+        canCaption: 'Isosport — filled & packed at our facility',
       },
       marquee: ['Energy Drinks', 'Functional', 'Sports Drinks', 'Soft Drinks'],
       promo: {
@@ -294,6 +298,10 @@ export const dictionary: Record<Locale, Dictionary> = {
           { value: '3', target: 3, suffix: '', label: 'High-tech filling lines' },
         ],
         caption: 'Footage from our filling line',
+      },
+      lineFilm: {
+        label: 'Straight from the Line',
+        headline: 'Over 330 million cans a year — in motion.',
       },
       categories: {
         label: 'Beverage Categories',
@@ -420,7 +428,7 @@ export const dictionary: Record<Locale, Dictionary> = {
           min: ['15,000 cans', '30,000 cans', '45,000 cans', '60,000 cans'],
         },
         videoCaption:
-          'Voran Energy — designed, filled, and packed at our facility.',
+          'Isosport — designed, filled, and packed at our facility.',
       },
       step4: {
         label: 'Step 04',
@@ -566,10 +574,10 @@ export const dictionary: Record<Locale, Dictionary> = {
     },
     media: {
       canCarbonatedAlt:
-        'Кен Voran газирана енергийна напитка — произведен в завода на We Can',
+        'Кен Isosport газирана енергийна напитка — произведен в завода на We Can',
       canNonCarbonatedAlt:
-        'Кен Voran негазирана енергийна напитка — произведен в завода на We Can',
-      promoVideoLabel: 'Бранд видео на Voran energy drink',
+        'Кен Isosport негазирана енергийна напитка — произведен в завода на We Can',
+      promoVideoLabel: 'Бранд видео на Isosport energy drink',
       lineVideoLabel: 'Кенове по нашата пълначна линия',
       factoryVideoLabel: 'В нашия завод за бутилиране',
     },
@@ -592,7 +600,7 @@ export const dictionary: Record<Locale, Dictionary> = {
           'Гъвкаво производство в алуминиеви кенове за енергийни, функционални, спортни и безалкохолни напитки. От 15,000 кена кратки серии до пълни производствени серии.',
         ctaPrimary: 'Заявете оферта',
         ctaSecondary: 'Вижте възможностите',
-        canCaption: 'Voran Energy — пълнено и пакетирано в нашия завод',
+        canCaption: 'Isosport — пълнено и пакетирано в нашия завод',
       },
       marquee: ['Енергийни', 'Функционални', 'Спортни', 'Безалкохолни'],
       promo: {
@@ -653,6 +661,10 @@ export const dictionary: Record<Locale, Dictionary> = {
           { value: '3', target: 3, suffix: '', label: 'Високотехнологични линии' },
         ],
         caption: 'Кадри от нашата пълначна линия',
+      },
+      lineFilm: {
+        label: 'Директно от линията',
+        headline: 'Над 330 милиона кена годишно — в движение.',
       },
       categories: {
         label: 'Категории напитки',
@@ -779,7 +791,7 @@ export const dictionary: Record<Locale, Dictionary> = {
           min: ['15,000 кена', '30,000 кена', '45,000 кена', '60,000 кена'],
         },
         videoCaption:
-          'Voran Energy — дизайн, пълнене и пакетиране в нашия завод.',
+          'Isosport — дизайн, пълнене и пакетиране в нашия завод.',
       },
       step4: {
         label: 'Стъпка 04',

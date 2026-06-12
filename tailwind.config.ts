@@ -15,8 +15,8 @@ const config: Config = {
         cream: '#F0EFEC',
         // Near-black accent / dark sections
         ink: '#0F1011',
-        // Muted text
-        muted: '#6B6E72',
+        // Muted text — tuned to pass WCAG AA (4.5:1) on the cream background
+        muted: '#64686C',
         // Warm aluminum silver — references the product material
         aluminum: '#B0B5B8',
         // Vibrant industrial orange — used VERY sparingly

@@ -42,24 +42,24 @@ export default function Hero() {
 
             const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
             tl.to(q('.hero-label'), { autoAlpha: 1, duration: 0.01 })
-              .from(q('.hero-label'), { y: 20, duration: 0.7 }, 0)
-              .set(q('.hero-headline'), { autoAlpha: 1 }, 0.12)
+              .from(q('.hero-label'), { y: 20, duration: 0.6 }, 0)
+              .set(q('.hero-headline'), { autoAlpha: 1 }, 0.1)
               .from(
                 split.chars,
-                { yPercent: 120, stagger: 0.016, duration: 0.85 },
-                0.12,
+                { yPercent: 120, stagger: 0.013, duration: 0.75 },
+                0.1,
               )
-              .to(q('.hero-sub'), { autoAlpha: 1, y: 0, duration: 0.01 }, 0.7)
-              .from(q('.hero-sub'), { y: 24, duration: 0.7 }, 0.7)
-              .to(q('.hero-ctas'), { autoAlpha: 1, duration: 0.01 }, 0.85)
-              .from(q('.hero-ctas'), { y: 20, duration: 0.7 }, 0.85)
-              .to(q('.hero-cans'), { autoAlpha: 1, duration: 0.01 }, 0.35)
+              .to(q('.hero-sub'), { autoAlpha: 1, y: 0, duration: 0.01 }, 0.55)
+              .from(q('.hero-sub'), { y: 24, duration: 0.6 }, 0.55)
+              .to(q('.hero-ctas'), { autoAlpha: 1, duration: 0.01 }, 0.7)
+              .from(q('.hero-ctas'), { y: 20, duration: 0.6 }, 0.7)
+              .to(q('.hero-cans'), { autoAlpha: 1, duration: 0.01 }, 0.3)
               .from(
                 q('.hero-cans'),
-                { y: 70, scale: 0.94, duration: 1.1, ease: 'power2.out' },
-                0.35,
+                { y: 70, scale: 0.94, duration: 1, ease: 'power2.out' },
+                0.3,
               )
-              .to(q('.hero-caption'), { autoAlpha: 1, duration: 0.6 }, 1.2);
+              .to(q('.hero-caption'), { autoAlpha: 1, duration: 0.5 }, 1.0);
           }),
         );
 

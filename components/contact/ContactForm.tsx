@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useI18n } from '@/lib/i18n/context';
 import { EASE } from '@/lib/animations';
+import { gsap, useGSAP, MM_ANY_MOTION, MM_DESKTOP } from '@/lib/gsap';
 
 interface FormState {
   company: string;
@@ -41,8 +42,10 @@ const REQUIRED: (keyof FormState)[] = [
   'beverageType',
 ];
 
+// Animated focus: the underline thickens via box-shadow (no layout shift) and
+// the caret picks up the ember accent while typing.
 const inputClass =
-  'w-full border-b border-ink/20 bg-transparent py-2.5 text-ink placeholder:text-muted/60 transition-colors duration-200 focus:border-ink focus:outline-none';
+  'w-full border-b border-ink/20 bg-transparent py-2.5 text-ink caret-ember placeholder:text-muted/60 transition-[border-color,box-shadow] duration-300 focus:border-ink focus:shadow-[0_1px_0_0_#0F1011] focus:outline-none';
 
 function FieldLabel({
   children,
@@ -68,6 +71,47 @@ export default function ContactForm() {
   const [values, setValues] = useState<FormState>(EMPTY);
   const [error, setError] = useState<string | null>(null);
   const [status, setStatus] = useState<'idle' | 'sending' | 'success'>('idle');
+  const root = useRef<HTMLFormElement>(null);
+
+  useGSAP(
+    () => {
+      if (!root.current) return;
+      const mm = gsap.matchMedia(root);
+
+      // Sections rise in one after another as the form enters the viewport.
+      mm.add(MM_ANY_MOTION, () => {
+        gsap.from('.form-section', {
+          y: 36,
+          autoAlpha: 0,
+          duration: 0.8,
+          ease: 'power3.out',
+          stagger: 0.12,
+          scrollTrigger: { trigger: root.current, start: 'top 80%', once: true },
+        });
+      });
+
+      // Magnetic submit button — follows the cursor slightly, springs back.
+      mm.add(`${MM_DESKTOP} and (pointer: fine)`, () => {
+        const btn = root.current!.querySelector<HTMLElement>('.form-submit');
+        if (!btn) return;
+        const xTo = gsap.quickTo(btn, 'x', { duration: 0.4, ease: 'power3.out' });
+        const yTo = gsap.quickTo(btn, 'y', { duration: 0.4, ease: 'power3.out' });
+
+        const onMove = (e: MouseEvent) => {
+          const r = btn.getBoundingClientRect();
+          const dx = e.clientX - (r.left + r.width / 2);
+          const dy = e.clientY - (r.top + r.height / 2);
+          const within =
+            Math.abs(dx) < r.width * 0.9 && Math.abs(dy) < r.height * 1.6;
+          xTo(within ? dx * 0.22 : 0);
+          yTo(within ? dy * 0.3 : 0);
+        };
+        window.addEventListener('mousemove', onMove, { passive: true });
+        return () => window.removeEventListener('mousemove', onMove);
+      });
+    },
+    { scope: root, dependencies: [status] },
+  );
 
   const update = <K extends keyof FormState>(key: K, value: FormState[K]) => {
     setValues((prev) => ({ ...prev, [key]: value }));
@@ -128,9 +172,14 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="space-y-12">
+    <form
+      ref={root}
+      onSubmit={handleSubmit}
+      noValidate
+      className="space-y-12 rounded-2xl bg-white/70 p-6 ring-1 ring-ink/10 shadow-[0_24px_80px_-24px_rgba(15,16,17,0.18)] backdrop-blur-sm sm:p-10"
+    >
       {/* Company & Contact */}
-          <fieldset className="space-y-6">
+          <fieldset className="form-section space-y-6">
             <legend className="label mb-2 text-ink">{f.sectionCompany}</legend>
             <div className="grid gap-6 sm:grid-cols-2">
               <div>
@@ -198,7 +247,7 @@ export default function ContactForm() {
           </fieldset>
 
           {/* Project Details */}
-          <fieldset className="space-y-8">
+          <fieldset className="form-section space-y-8">
             <legend className="label mb-2 text-ink">{f.sectionProject}</legend>
 
             <div className="grid gap-6 sm:grid-cols-2">
@@ -308,7 +357,7 @@ export default function ContactForm() {
           </fieldset>
 
           {/* Tell us more */}
-          <fieldset>
+          <fieldset className="form-section">
             <legend className="label mb-2 text-ink">{f.sectionMore}</legend>
             <FieldLabel htmlFor="description">{f.description}</FieldLabel>
             <textarea
@@ -322,7 +371,7 @@ export default function ContactForm() {
           </fieldset>
 
           {/* Error + submit */}
-          <div className="space-y-5">
+          <div className="form-section space-y-5">
             {error && (
               <p role="alert" className="text-sm text-ember">
                 {error}
@@ -331,7 +380,7 @@ export default function ContactForm() {
             <button
               type="submit"
               disabled={status === 'sending'}
-              className="btn-primary w-full text-base disabled:opacity-60 sm:w-auto"
+              className="form-submit btn-primary w-full px-10 text-base disabled:opacity-60 sm:w-auto"
             >
               {status === 'sending' ? f.submitting : f.submit}
             </button>

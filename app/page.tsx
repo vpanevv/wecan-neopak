@@ -6,6 +6,7 @@ import Marquee from '@/components/cinema/Marquee';
 import QuoteStrip from '@/components/home/QuoteStrip';
 import WhyWeCan from '@/components/home/WhyWeCan';
 import CapacitySection from '@/components/home/CapacitySection';
+import LineFilm from '@/components/home/LineFilm';
 import Categories from '@/components/home/Categories';
 import PromoScene from '@/components/home/PromoScene';
 import Process from '@/components/home/Process';
@@ -22,6 +23,7 @@ export default function HomePage() {
       <QuoteStrip />
       <WhyWeCan />
       <CapacitySection />
+      <LineFilm />
       <Categories />
       <PromoScene />
       <Process />
