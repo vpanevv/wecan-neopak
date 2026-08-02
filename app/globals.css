@@ -77,6 +77,64 @@
       focus-visible:outline-offset-2 focus-visible:outline-canvas;
   }
 
+  /* Language switch — Uiverse toggle (uiverse.io, by aasisodiya). Class names
+     are namespaced because `.switch`/`.slider` are too generic to live in a
+     global stylesheet. Sized in em off the root font-size, so the whole
+     control scales from the single font-size below. */
+  .lang-switch {
+    font-size: 1rem;
+    position: relative;
+    display: inline-block;
+    width: 4em;
+    height: 2em;
+  }
+
+  .lang-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .lang-slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background-color: #eee;
+    transition: 0.4s;
+    border-radius: 0.5em;
+    box-shadow: 0 0.2em #dfd9d9;
+  }
+
+  .lang-slider::before {
+    position: absolute;
+    content: '';
+    height: 1.5em;
+    width: 1.4em;
+    border-radius: 0.3em;
+    left: 0.3em;
+    bottom: 0.7em;
+    background-color: lightsalmon;
+    transition: 0.4s;
+    box-shadow: 0 0.4em #bcb4b4;
+  }
+
+  .lang-slider:hover::before {
+    box-shadow: 0 0.2em #bcb4b4;
+    bottom: 0.5em;
+  }
+
+  .lang-switch input:checked + .lang-slider::before {
+    transform: translateX(2em);
+    background: lightgreen;
+  }
+
+  /* The stock markup collapses the input to 0×0, which also hides the focus
+     ring — put it back on the slider so the control stays keyboard-visible. */
+  .lang-switch input:focus-visible + .lang-slider {
+    outline: 2px solid var(--ink);
+    outline-offset: 2px;
+  }
+
   /* Secondary text link with arrow. Add the `group` class in markup for the
      arrow hover effect — `group` can't be used inside @apply. */
   .btn-link {

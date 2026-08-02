@@ -1,38 +1,44 @@
 'use client';
 
 import { useI18n } from '@/lib/i18n/context';
-import type { Locale } from '@/lib/i18n/dictionary';
 
-const OPTIONS: Locale[] = ['en', 'bg'];
-
-// Compact EN / BG segmented toggle for the navigation.
+// EN / BG language picker. The control itself is a checkbox styled as a
+// sliding switch (unchecked = English, checked = Bulgarian); the words sit
+// either side so it still reads as a language picker rather than a generic
+// on/off. The words are aria-hidden because the input already carries the
+// accessible name and its own checked state.
 export default function LanguageToggle({ invert = false }: { invert?: boolean }) {
   const { locale, setLocale } = useI18n();
+  const isBg = locale === 'bg';
 
-  const base = invert ? 'text-aluminum' : 'text-muted';
+  const dim = invert ? 'text-aluminum' : 'text-muted';
   const active = invert ? 'text-canvas' : 'text-ink';
 
   return (
     <div
       role="group"
       aria-label="Language"
-      className="flex items-center gap-1 font-sans text-xs font-medium uppercase tracking-label"
+      className="flex items-center gap-2 font-sans text-xs font-medium uppercase tracking-label"
     >
-      {OPTIONS.map((opt, i) => (
-        <span key={opt} className="flex items-center gap-1">
-          <button
-            type="button"
-            onClick={() => setLocale(opt)}
-            aria-pressed={locale === opt}
-            className={`transition-colors duration-300 ease-intent hover:opacity-70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
-              locale === opt ? active : base
-            }`}
-          >
-            {opt.toUpperCase()}
-          </button>
-          {i === 0 && <span className={base} aria-hidden>/</span>}
-        </span>
-      ))}
+      <span aria-hidden className={`transition-colors duration-300 ${isBg ? dim : active}`}>
+        EN
+      </span>
+
+      <label className="lang-switch">
+        <input
+          type="checkbox"
+          checked={isBg}
+          onChange={(e) => setLocale(e.target.checked ? 'bg' : 'en')}
+          aria-label={
+            isBg ? 'Switch language to English' : 'Switch language to Bulgarian'
+          }
+        />
+        <span className="lang-slider" />
+      </label>
+
+      <span aria-hidden className={`transition-colors duration-300 ${isBg ? active : dim}`}>
+        BG
+      </span>
     </div>
   );
 }
