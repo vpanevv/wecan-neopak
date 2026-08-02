@@ -24,6 +24,15 @@
     font-feature-settings: 'kern', 'liga', 'calt';
   }
 
+  /* Body copy runs justified site-wide. Headlines are never <p>, so they keep
+     their ragged right, and any explicit text-* utility still wins over this. */
+  p,
+  li {
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+  }
+
   ::selection {
     background-color: var(--ink);
     color: var(--canvas);
