@@ -189,6 +189,7 @@ export interface Dictionary {
       description: string;
       descriptionPlaceholder: string;
       optional: string;
+      requiredNote: string;
       submit: string;
       submitting: string;
       successTitle: string;
@@ -554,7 +555,8 @@ export const dictionary: Record<Locale, Dictionary> = {
         descriptionPlaceholder:
           'Tell us about your brand, concept, and any specific requirements.',
         optional: 'optional',
-        submit: 'Submit Request',
+        requiredNote: 'Required fields',
+        submit: 'Submit',
         submitting: 'Sending…',
         successTitle: 'Thank you. We’ll respond within 2 business days. 🥤',
         successBody: 'Your request has been sent to our team.',
@@ -917,7 +919,8 @@ export const dictionary: Record<Locale, Dictionary> = {
         descriptionPlaceholder:
           'Разкажете ни за вашия бранд, концепция и специфични изисквания.',
         optional: 'по желание',
-        submit: 'Изпратете запитване',
+        requiredNote: 'Задължителни полета',
+        submit: 'Изпрати',
         submitting: 'Изпращане…',
         successTitle: 'Благодарим ви. Ще се свържем в рамките на 2 работни дни. 🥤',
         successBody: 'Вашето запитване беше изпратено до нашия екип.',
