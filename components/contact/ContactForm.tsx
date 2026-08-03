@@ -2,9 +2,10 @@
 
 import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import { Check } from 'lucide-react';
 import { useI18n } from '@/lib/i18n/context';
 import { EASE } from '@/lib/animations';
-import { gsap, useGSAP, MM_ANY_MOTION, MM_DESKTOP } from '@/lib/gsap';
+import { gsap, useGSAP, MM_ANY_MOTION } from '@/lib/gsap';
 
 interface FormState {
   company: string;
@@ -42,24 +43,60 @@ const REQUIRED: (keyof FormState)[] = [
   'beverageType',
 ];
 
-// Animated focus: the underline thickens via box-shadow (no layout shift) and
-// the caret picks up the ember accent while typing.
+// Fields are drawn as real boxes rather than bare underlines, so each input's
+// hit area is obvious before it's focused. Focus is carried by the ember
+// accent — border plus ring — which is the strongest signal on the page.
 const inputClass =
-  'w-full border-b border-ink/20 bg-transparent py-2.5 text-ink caret-ember placeholder:text-muted/60 transition-[border-color,box-shadow] duration-300 focus:border-ink focus:shadow-[0_1px_0_0_#0F1011] focus:outline-none';
+  'w-full rounded-xl border border-ink/15 bg-canvas px-4 py-3 text-ink caret-ember placeholder:text-muted/60 transition-[border-color,box-shadow,background-color] duration-200 hover:border-ink/35 focus:border-ember focus:bg-white focus:outline-none focus:ring-4 focus:ring-ember/15';
+
+// Chip shared by the can-size checkboxes and decoration radios.
+const chipBase =
+  'flex cursor-pointer items-center justify-center gap-2 rounded-xl border-2 px-4 py-3 text-center text-sm font-medium transition-all duration-200';
+const chipOn = 'border-ink bg-ink text-canvas shadow-sm';
+const chipOff = 'border-ink/15 bg-canvas text-ink hover:border-ink/50 hover:bg-white';
+
+// Coloured rule + bold display type, so each section reads as a heading
+// instead of another small grey label competing with the field labels.
+function SectionHeading({ children }: { children: React.ReactNode }) {
+  return (
+    <legend className="mb-6">
+      <span className="flex items-center gap-3">
+        <span className="h-6 w-1.5 rounded-full bg-ember" aria-hidden />
+        <span className="font-display text-xl font-semibold tracking-tight text-ink md:text-2xl">
+          {children}
+        </span>
+      </span>
+    </legend>
+  );
+}
 
 function FieldLabel({
   children,
   htmlFor,
   optional,
+  required,
 }: {
   children: React.ReactNode;
   htmlFor?: string;
   optional?: string;
+  required?: boolean;
 }) {
   return (
-    <label htmlFor={htmlFor} className="label block text-muted">
+    <label
+      htmlFor={htmlFor}
+      className="mb-2 block font-sans text-xs font-semibold uppercase tracking-label text-ink"
+    >
       {children}
-      {optional && <span className="ml-2 lowercase tracking-normal">({optional})</span>}
+      {required && (
+        <span className="ml-1 text-ember" aria-hidden>
+          *
+        </span>
+      )}
+      {optional && (
+        <span className="ml-2 font-normal lowercase tracking-normal text-muted">
+          ({optional})
+        </span>
+      )}
     </label>
   );
 }
@@ -90,25 +127,9 @@ export default function ContactForm() {
         });
       });
 
-      // Magnetic submit button — follows the cursor slightly, springs back.
-      mm.add(`${MM_DESKTOP} and (pointer: fine)`, () => {
-        const btn = root.current!.querySelector<HTMLElement>('.form-submit');
-        if (!btn) return;
-        const xTo = gsap.quickTo(btn, 'x', { duration: 0.4, ease: 'power3.out' });
-        const yTo = gsap.quickTo(btn, 'y', { duration: 0.4, ease: 'power3.out' });
-
-        const onMove = (e: MouseEvent) => {
-          const r = btn.getBoundingClientRect();
-          const dx = e.clientX - (r.left + r.width / 2);
-          const dy = e.clientY - (r.top + r.height / 2);
-          const within =
-            Math.abs(dx) < r.width * 0.9 && Math.abs(dy) < r.height * 1.6;
-          xTo(within ? dx * 0.22 : 0);
-          yTo(within ? dy * 0.3 : 0);
-        };
-        window.addEventListener('mousemove', onMove, { passive: true });
-        return () => window.removeEventListener('mousemove', onMove);
-      });
+      // The submit button used to be magnetic (GSAP quickTo on x/y). That is
+      // gone: it wrote an inline transform, which outranks the button's own
+      // :hover/:active transforms and would kill the send animation.
     },
     { scope: root, dependencies: [status] },
   );
@@ -179,11 +200,13 @@ export default function ContactForm() {
       className="space-y-12 rounded-2xl bg-white/70 p-6 ring-1 ring-ink/10 shadow-[0_24px_80px_-24px_rgba(15,16,17,0.18)] backdrop-blur-sm sm:p-10"
     >
       {/* Company & Contact */}
-          <fieldset className="form-section space-y-6">
-            <legend className="label mb-2 text-ink">{f.sectionCompany}</legend>
+          <fieldset className="form-section">
+            <SectionHeading>{f.sectionCompany}</SectionHeading>
             <div className="grid gap-6 sm:grid-cols-2">
               <div>
-                <FieldLabel htmlFor="company">{f.company}</FieldLabel>
+                <FieldLabel htmlFor="company" required>
+                  {f.company}
+                </FieldLabel>
                 <input
                   id="company"
                   type="text"
@@ -195,7 +218,9 @@ export default function ContactForm() {
                 />
               </div>
               <div>
-                <FieldLabel htmlFor="contactPerson">{f.contactPerson}</FieldLabel>
+                <FieldLabel htmlFor="contactPerson" required>
+                  {f.contactPerson}
+                </FieldLabel>
                 <input
                   id="contactPerson"
                   type="text"
@@ -207,7 +232,9 @@ export default function ContactForm() {
                 />
               </div>
               <div>
-                <FieldLabel htmlFor="email">{f.email}</FieldLabel>
+                <FieldLabel htmlFor="email" required>
+                  {f.email}
+                </FieldLabel>
                 <input
                   id="email"
                   type="email"
@@ -232,7 +259,9 @@ export default function ContactForm() {
                 />
               </div>
               <div className="sm:col-span-2">
-                <FieldLabel htmlFor="country">{f.country}</FieldLabel>
+                <FieldLabel htmlFor="country" required>
+                  {f.country}
+                </FieldLabel>
                 <input
                   id="country"
                   type="text"
@@ -248,11 +277,13 @@ export default function ContactForm() {
 
           {/* Project Details */}
           <fieldset className="form-section space-y-8">
-            <legend className="label mb-2 text-ink">{f.sectionProject}</legend>
+            <SectionHeading>{f.sectionProject}</SectionHeading>
 
             <div className="grid gap-6 sm:grid-cols-2">
               <div>
-                <FieldLabel htmlFor="beverageType">{f.beverageType}</FieldLabel>
+                <FieldLabel htmlFor="beverageType" required>
+                  {f.beverageType}
+                </FieldLabel>
                 <select
                   id="beverageType"
                   required
@@ -281,11 +312,7 @@ export default function ContactForm() {
                   return (
                     <label
                       key={size}
-                      className={`flex cursor-pointer items-center gap-2 rounded-lg border px-4 py-3 text-sm transition-colors duration-200 ${
-                        checked
-                          ? 'border-ink bg-ink text-canvas'
-                          : 'border-ink/20 text-ink hover:border-ink/50'
-                      }`}
+                      className={`${chipBase} ${checked ? chipOn : chipOff}`}
                     >
                       <input
                         type="checkbox"
@@ -293,6 +320,7 @@ export default function ContactForm() {
                         onChange={() => toggleCanSize(size)}
                         className="sr-only"
                       />
+                      {checked && <Check size={15} strokeWidth={3} aria-hidden />}
                       {size}
                     </label>
                   );
@@ -309,10 +337,8 @@ export default function ContactForm() {
                   return (
                     <label
                       key={opt}
-                      className={`flex cursor-pointer items-center gap-2 rounded-full border px-5 py-2.5 text-sm transition-colors duration-200 ${
-                        selected
-                          ? 'border-ink bg-ink text-canvas'
-                          : 'border-ink/20 text-ink hover:border-ink/50'
+                      className={`${chipBase} !rounded-full !px-5 ${
+                        selected ? chipOn : chipOff
                       }`}
                     >
                       <input
@@ -358,7 +384,7 @@ export default function ContactForm() {
 
           {/* Tell us more */}
           <fieldset className="form-section">
-            <legend className="label mb-2 text-ink">{f.sectionMore}</legend>
+            <SectionHeading>{f.sectionMore}</SectionHeading>
             <FieldLabel htmlFor="description">{f.description}</FieldLabel>
             <textarea
               id="description"
@@ -371,19 +397,47 @@ export default function ContactForm() {
           </fieldset>
 
           {/* Error + submit */}
-          <div className="form-section space-y-5">
+          <div className="form-section space-y-5 border-t border-ink/10 pt-8">
             {error && (
-              <p role="alert" className="text-sm text-ember">
+              <p
+                role="alert"
+                className="rounded-xl border border-ember/30 bg-ember/10 px-4 py-3 text-sm font-medium text-ember"
+              >
                 {error}
               </p>
             )}
-            <button
-              type="submit"
-              disabled={status === 'sending'}
-              className="form-submit btn-primary w-full px-10 text-base disabled:opacity-60 sm:w-auto"
-            >
-              {status === 'sending' ? f.submitting : f.submit}
-            </button>
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+              <button
+                type="submit"
+                disabled={status === 'sending'}
+                className="form-submit btn-send"
+              >
+                <div className="svg-wrapper-1">
+                  <div className="svg-wrapper">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      height="24"
+                      aria-hidden
+                    >
+                      <path fill="none" d="M0 0h24v24H0z" />
+                      <path
+                        fill="currentColor"
+                        d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
+                      />
+                    </svg>
+                  </div>
+                </div>
+                <span>{status === 'sending' ? f.submitting : f.submit}</span>
+              </button>
+              <p className="text-sm text-muted">
+                <span className="text-ember" aria-hidden>
+                  *
+                </span>{' '}
+                {f.requiredNote}
+              </p>
+            </div>
           </div>
     </form>
   );

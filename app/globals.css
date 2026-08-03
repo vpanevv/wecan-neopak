@@ -135,12 +135,92 @@
     outline-offset: 2px;
   }
 
+  /* Submit button — Uiverse (uiverse.io, by adamgiebl). Scoped to .btn-send:
+     the original targets a bare `button`, which in a global stylesheet would
+     restyle every button on the site. */
+  .btn-send {
+    font-family: inherit;
+    font-size: 20px;
+    background: royalblue;
+    color: white;
+    padding: 0.7em 1em;
+    padding-left: 0.9em;
+    display: flex;
+    align-items: center;
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  .btn-send span {
+    display: block;
+    margin-left: 0.3em;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .btn-send svg {
+    display: block;
+    transform-origin: center center;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .btn-send:hover .svg-wrapper {
+    animation: fly-1 0.6s ease-in-out infinite alternate;
+  }
+
+  .btn-send:hover svg {
+    transform: translateX(1.2em) rotate(45deg) scale(1.1);
+  }
+
+  .btn-send:hover span {
+    transform: translateX(5em);
+  }
+
+  .btn-send:active {
+    transform: scale(0.95);
+  }
+
+  .btn-send:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+  }
+
+  /* While sending, hold the button still so the plane doesn't keep flying
+     under a control that no longer responds. */
+  .btn-send:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+  }
+
+  .btn-send:disabled:hover .svg-wrapper {
+    animation: none;
+  }
+
+  .btn-send:disabled:hover svg,
+  .btn-send:disabled:hover span {
+    transform: none;
+  }
+
   /* Secondary text link with arrow. Add the `group` class in markup for the
      arrow hover effect — `group` can't be used inside @apply. */
   .btn-link {
     @apply inline-flex items-center gap-1.5 font-sans text-sm font-medium text-ink
       transition-colors duration-300 hover:text-muted focus-visible:outline
       focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink;
+  }
+}
+
+/* Paper-plane hover flight for .btn-send. Kept outside @layer so the
+   keyframes are never subject to layer ordering. */
+@keyframes fly-1 {
+  from {
+    transform: translateY(0.1em);
+  }
+
+  to {
+    transform: translateY(-0.1em);
   }
 }
 
