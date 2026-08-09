@@ -161,12 +161,8 @@ export interface Dictionary {
     headline: string;
     body: string;
     infoHeading: string;
-    address: string;
-    addressValue: string;
     email: string;
     emailValue: string;
-    phone: string;
-    phoneValue: string;
     form: {
       sectionCompany: string;
       sectionProject: string;
@@ -520,12 +516,8 @@ export const dictionary: Record<Locale, Dictionary> = {
       body:
         'Tell us about your beverage concept, volume needs, and timeline. Our team will respond with a personalized offer within 2 business days.',
       infoHeading: 'Direct contact',
-      address: 'Address',
-      addressValue: 'Bulgaria — full address provided on request',
       email: 'Email',
-      emailValue: 'hello@wecan.bg',
-      phone: 'Phone',
-      phoneValue: '+359 — available on request',
+      emailValue: 'info@wecan-bg.com',
       form: {
         sectionCompany: 'Company & Contact',
         sectionProject: 'Project Details',
@@ -884,12 +876,8 @@ export const dictionary: Record<Locale, Dictionary> = {
       body:
         'Разкажете ни за вашата концепция, обем и срокове. Нашият екип ще ви върне персонализирана оферта в рамките на 2 работни дни.',
       infoHeading: 'Директен контакт',
-      address: 'Адрес',
-      addressValue: 'България — пълен адрес при запитване',
       email: 'Имейл',
-      emailValue: 'hello@wecan.bg',
-      phone: 'Телефон',
-      phoneValue: '+359 — при запитване',
+      emailValue: 'info@wecan-bg.com',
       form: {
         sectionCompany: 'Компания и контакт',
         sectionProject: 'Детайли за проекта',

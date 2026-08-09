@@ -36,29 +36,19 @@ export default function ContactContent() {
               {c.body}
             </motion.p>
 
-            {/* Direct contact — TODO: replace placeholders with client details */}
+            {/* Direct contact — email only; there is no public address or phone. */}
             <div className="mt-12 space-y-6 border-t border-ink/15 pt-8">
               <h2 className="label text-ink">{c.infoHeading}</h2>
-              <dl className="space-y-5">
-                <div>
-                  <dt className="label text-muted">{c.address}</dt>
-                  <dd className="mt-1.5 text-ink">{c.addressValue}</dd>
-                </div>
-                <div>
-                  <dt className="label text-muted">{c.email}</dt>
-                  <dd className="mt-1.5">
-                    <a
-                      href={`mailto:${c.emailValue}`}
-                      className="text-ink underline-offset-4 transition-colors hover:text-muted hover:underline"
-                    >
-                      {c.emailValue}
-                    </a>
-                  </dd>
-                </div>
-                <div>
-                  <dt className="label text-muted">{c.phone}</dt>
-                  <dd className="mt-1.5 text-ink">{c.phoneValue}</dd>
-                </div>
+              <dl>
+                <dt className="label text-muted">{c.email}</dt>
+                <dd className="mt-1.5">
+                  <a
+                    href={`mailto:${c.emailValue}`}
+                    className="text-ink underline-offset-4 transition-colors hover:text-muted hover:underline"
+                  >
+                    {c.emailValue}
+                  </a>
+                </dd>
               </dl>
             </div>
 
