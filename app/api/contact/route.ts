@@ -4,6 +4,11 @@ import nodemailer from 'nodemailer';
 // Runs on the Node.js runtime (Nodemailer needs Node APIs).
 export const runtime = 'nodejs';
 
+// Where inquiries land. CONTACT_TO_EMAIL can override it per environment, but
+// the production inbox is the default so delivery does not depend on an env
+// var being remembered at deploy time.
+const INQUIRY_INBOX = 'info@wecan-bg.com';
+
 interface Payload {
   company?: string;
   contactPerson?: string;
@@ -76,8 +81,8 @@ export async function POST(request: Request) {
   `;
   const text = rows.map(([label, value]) => `${label}: ${value}`).join('\n');
 
-  // TODO: Configure with client's actual email address + SMTP credentials.
-  // Set SMTP_* and CONTACT_* in the environment (see .env.example).
+  // TODO: Configure the SMTP credentials. Set SMTP_* in the environment (see
+  // .env.example); the destination inbox already defaults to INQUIRY_INBOX.
   const {
     SMTP_HOST,
     SMTP_PORT,
@@ -92,7 +97,9 @@ export async function POST(request: Request) {
   // the form flow is testable before the client provides credentials.
   if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS) {
     console.warn(
-      '[contact] SMTP not configured — inquiry received but not emailed:\n' + text,
+      `[contact] SMTP not configured — inquiry received but NOT emailed to ${
+        CONTACT_TO_EMAIL ?? INQUIRY_INBOX
+      }:\n${text}`,
     );
     return NextResponse.json({ ok: true, delivered: false });
   }
@@ -106,8 +113,10 @@ export async function POST(request: Request) {
     });
 
     await transporter.sendMail({
+      // `from` stays on the SMTP account by default — the sending domain has
+      // to be one the provider is authorised to send for.
       from: CONTACT_FROM_EMAIL ?? SMTP_USER,
-      to: CONTACT_TO_EMAIL ?? SMTP_USER,
+      to: CONTACT_TO_EMAIL ?? INQUIRY_INBOX,
       replyTo: String(data.email),
       subject: `Private Label inquiry — ${escape(data.company)}`,
       text,

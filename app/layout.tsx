@@ -74,8 +74,7 @@ const jsonLd = {
   description:
     'Bulgarian beverage canning facility specializing in private label production of energy drinks, functional beverages, sports drinks, and soft drinks in aluminum cans.',
   url: SITE_URL,
-  // TODO: Replace placeholders with client-provided contact + address details
-  email: 'hello@wecan.bg',
+  email: 'info@wecan-bg.com',
   address: {
     '@type': 'PostalAddress',
     addressCountry: 'BG',

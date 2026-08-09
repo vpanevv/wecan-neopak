@@ -83,9 +83,8 @@ export default function Footer() {
           {/* Contact info */}
           <div>
             <h3 className="label text-aluminum">{t.footer.contactHeading}</h3>
-            {/* TODO: Replace placeholders with client-provided contact details */}
+            {/* Email only — there is no public address or phone. */}
             <ul className="mt-5 space-y-3 text-sm text-canvas/80">
-              <li>{t.contact.addressValue}</li>
               <li>
                 <a
                   href={`mailto:${t.contact.emailValue}`}
@@ -94,7 +93,6 @@ export default function Footer() {
                   {t.contact.emailValue}
                 </a>
               </li>
-              <li>{t.contact.phoneValue}</li>
             </ul>
           </div>
         </div>
