@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { OG_IMAGE } from '@/lib/seo';
 import ContactContent from './ContactContent';
 
 export const metadata: Metadata = {
@@ -18,6 +19,7 @@ export const metadata: Metadata = {
     description:
       'Request a personalized private label canning offer. We respond within 2 business days.',
     url: '/contact',
+    images: [OG_IMAGE],
   },
 };
 

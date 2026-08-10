@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { OG_IMAGE } from '@/lib/seo';
 import PrivateLabelContent from './PrivateLabelContent';
 
 export const metadata: Metadata = {
@@ -18,6 +19,7 @@ export const metadata: Metadata = {
     description:
       'Customize every aspect — beverage type, can size, decoration. Designed for brands that need flexibility without compromise.',
     url: '/private-label',
+    images: [OG_IMAGE],
   },
 };
 
