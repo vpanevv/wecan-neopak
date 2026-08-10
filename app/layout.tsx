@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Inter, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { I18nProvider } from '@/lib/i18n/context';
-import { OG_IMAGE } from '@/lib/seo';
+import { OG_IMAGE, SITE_URL } from '@/lib/seo';
 import SmoothScroll from '@/components/SmoothScroll';
 import LocaleCrossfade from '@/components/LocaleCrossfade';
 import Nav from '@/components/Nav';
@@ -21,8 +21,6 @@ const jetbrainsMono = JetBrains_Mono({
   variable: '--font-mono',
   weight: ['400', '500'],
 });
-
-const SITE_URL = 'https://wecan.bg';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
