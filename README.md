@@ -97,10 +97,27 @@ defined in [`lib/images.ts`](lib/images.ts) with bilingual alt text.
 
 Search the codebase for `TODO`:
 
-- Contact address / email / phone (`lib/i18n/dictionary.ts`, Footer, schema.org in `app/layout.tsx`)
-- SMTP credentials (`.env`)
+- SMTP credentials (`.env`) — without them the contact form reports success and
+  sends nothing
 - Product & facility photography (`lib/images.ts`, `CanComposition`)
-- The site URL `https://wecan.bg` (used in metadata, sitemap, robots) if different
+
+## Site URL
+
+Canonical tags, the sitemap, `robots.txt` and `og:image` all derive from
+`SITE_URL` in `lib/seo.ts`. It resolves in this order:
+
+1. `NEXT_PUBLIC_SITE_URL` — set this to override on non-Netlify hosts.
+2. `URL` — set automatically by Netlify to the site's *primary* address. This
+   becomes the custom domain as soon as one is attached, so nothing needs
+   editing at that point.
+3. `https://wecan-bg.netlify.app` — fallback for local builds.
+
+Social previews need an absolute, reachable URL: if this resolves to a domain
+that does not serve the site, Facebook fetches the image, gets nothing, and
+renders a blank card. After changing the domain, re-scrape the URL in the
+[Facebook Sharing Debugger](https://developers.facebook.com/tools/debug/) —
+Facebook caches Open Graph data and will keep serving the old, empty result
+until told otherwise.
 
 ## Logo
 
