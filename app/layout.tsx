@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import { I18nProvider } from '@/lib/i18n/context';
+import { OG_IMAGE } from '@/lib/seo';
 import SmoothScroll from '@/components/SmoothScroll';
 import LocaleCrossfade from '@/components/LocaleCrossfade';
 import Nav from '@/components/Nav';
@@ -56,12 +57,14 @@ export const metadata: Metadata = {
       'Flexible aluminum can production for energy, functional, sports, and soft drinks. From 15,000-can short runs to full-scale series.',
     locale: 'en_US',
     alternateLocale: ['bg_BG'],
+    images: [OG_IMAGE],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'We Can Ltd. — Bulgarian Beverage Canning & Private Label',
     description:
       'Flexible aluminum can production for energy, functional, sports, and soft drinks.',
+    images: [OG_IMAGE.url],
   },
   robots: { index: true, follow: true },
 };
