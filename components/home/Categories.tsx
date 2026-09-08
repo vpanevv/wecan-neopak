@@ -32,7 +32,7 @@ export default function Categories() {
         >
           {t.home.categories.items.map((item, i) => {
             const Icon = ICONS[i];
-            // Energy (index 0) gets the sparing ember accent.
+            // Energy (index 0) gets the sparing accent colour.
             const accent = i === 0;
             return (
               // Index key: titles are translated — see BottlingLine note.
@@ -44,7 +44,7 @@ export default function Categories() {
                 <Icon
                   size={26}
                   strokeWidth={1.6}
-                  className={accent ? 'text-ember' : 'text-ink'}
+                  className={accent ? 'text-accent' : 'text-ink'}
                   aria-hidden
                 />
                 <h3 className="mt-6 font-display text-xl font-medium tracking-tight text-ink md:text-2xl">

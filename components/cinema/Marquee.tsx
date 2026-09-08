@@ -68,11 +68,11 @@ export default function Marquee() {
         <span key={word} className="flex items-center gap-[3vw]">
           <span
             className="whitespace-nowrap font-display text-[11vw] font-semibold uppercase leading-none tracking-tight text-transparent md:text-[7vw]"
-            style={{ WebkitTextStroke: '1.5px rgba(15,16,17,0.3)' }}
+            style={{ WebkitTextStroke: '1.5px rgba(10,17,36,0.3)' }}
           >
             {word}
           </span>
-          <span className="h-[1.2vw] w-[1.2vw] shrink-0 rounded-full bg-ember md:h-[0.8vw] md:w-[0.8vw]" />
+          <span className="h-[1.2vw] w-[1.2vw] shrink-0 rounded-full bg-accent md:h-[0.8vw] md:w-[0.8vw]" />
         </span>
       ))}
     </div>

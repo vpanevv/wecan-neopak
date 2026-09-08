@@ -44,10 +44,10 @@ const REQUIRED: (keyof FormState)[] = [
 ];
 
 // Fields are drawn as real boxes rather than bare underlines, so each input's
-// hit area is obvious before it's focused. Focus is carried by the ember
+// hit area is obvious before it's focused. Focus is carried by the accent
 // accent — border plus ring — which is the strongest signal on the page.
 const inputClass =
-  'w-full rounded-xl border border-ink/15 bg-canvas px-4 py-3 text-ink caret-ember placeholder:text-muted/60 transition-[border-color,box-shadow,background-color] duration-200 hover:border-ink/35 focus:border-ember focus:bg-white focus:outline-none focus:ring-4 focus:ring-ember/15';
+  'w-full rounded-xl border border-ink/15 bg-canvas px-4 py-3 text-ink caret-accent placeholder:text-muted/60 transition-[border-color,box-shadow,background-color] duration-200 hover:border-ink/35 focus:border-accent focus:bg-white focus:outline-none focus:ring-4 focus:ring-accent/15';
 
 // Chip shared by the can-size checkboxes and decoration radios.
 const chipBase =
@@ -61,7 +61,7 @@ function SectionHeading({ children }: { children: React.ReactNode }) {
   return (
     <legend className="mb-6">
       <span className="flex items-center gap-3">
-        <span className="h-6 w-1.5 rounded-full bg-ember" aria-hidden />
+        <span className="h-6 w-1.5 rounded-full bg-accent" aria-hidden />
         <span className="font-display text-xl font-semibold tracking-tight text-ink md:text-2xl">
           {children}
         </span>
@@ -88,7 +88,7 @@ function FieldLabel({
     >
       {children}
       {required && (
-        <span className="ml-1 text-ember" aria-hidden>
+        <span className="ml-1 text-accent" aria-hidden>
           *
         </span>
       )}
@@ -197,7 +197,7 @@ export default function ContactForm() {
       ref={root}
       onSubmit={handleSubmit}
       noValidate
-      className="space-y-12 rounded-2xl bg-white/70 p-6 ring-1 ring-ink/10 shadow-[0_24px_80px_-24px_rgba(15,16,17,0.18)] backdrop-blur-sm sm:p-10"
+      className="space-y-12 rounded-2xl bg-white/70 p-6 ring-1 ring-ink/10 shadow-[0_24px_80px_-24px_rgba(10,17,36,0.18)] backdrop-blur-sm sm:p-10"
     >
       {/* Company & Contact */}
           <fieldset className="form-section">
@@ -401,7 +401,7 @@ export default function ContactForm() {
             {error && (
               <p
                 role="alert"
-                className="rounded-xl border border-ember/30 bg-ember/10 px-4 py-3 text-sm font-medium text-ember"
+                className="rounded-xl border border-accent/30 bg-accent/10 px-4 py-3 text-sm font-medium text-accent"
               >
                 {error}
               </p>
@@ -432,7 +432,7 @@ export default function ContactForm() {
                 <span>{status === 'sending' ? f.submitting : f.submit}</span>
               </button>
               <p className="text-sm text-muted">
-                <span className="text-ember" aria-hidden>
+                <span className="text-accent" aria-hidden>
                   *
                 </span>{' '}
                 {f.requiredNote}
