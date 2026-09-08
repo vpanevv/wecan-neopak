@@ -4,12 +4,34 @@
 
 @layer base {
   :root {
-    --canvas: #fafafa;
-    --cream: #f0efec;
-    --ink: #0f1011;
-    --muted: #64686c;
-    --aluminum: #b0b5b8;
-    --ember: #e85d2f;
+    /* Surfaces only. Text tokens below are deliberately unchanged.
+       These are pushed as far toward the banner's deep blue as the existing
+       text colours allow: muted holds 4.52:1 on --canvas-deep and aluminum
+       holds 5.09:1 on --royal. Going darker breaks WCAG AA. */
+    --canvas: #e8ebf0;
+    --canvas-deep: #b8c8e6;
+    --cream: #d2dbeb;
+    --ink: #0a1124;
+    --navy: #0b2148;
+    --royal: #1b4a8f;
+    --muted: #4a5466;
+    --aluminum: #bcc7dc;
+    --accent: #2f4ca8;
+
+    /* Sampled from the client's gradient artwork: light and dark surfaces
+       both run left-to-right with a slight downward tilt. */
+    --surface-light: linear-gradient(
+      105deg,
+      var(--canvas) 0%,
+      var(--cream) 52%,
+      var(--canvas-deep) 100%
+    );
+    --surface-dark: linear-gradient(
+      105deg,
+      var(--navy) 0%,
+      #123166 52%,
+      var(--royal) 100%
+    );
   }
 
   html {
@@ -20,8 +42,25 @@
 
   body {
     background-color: var(--canvas);
+    background-image: var(--surface-light);
     color: var(--ink);
     font-feature-settings: 'kern', 'liga', 'calt';
+  }
+
+  /* Surfaces carry the gradient; the Tailwind bg-* class stays as the flat
+     fallback underneath. Scoped to section/footer on purpose — bg-canvas and
+     bg-cream are also used on buttons and on decorative blur blobs, which must
+     stay flat. Nav is excluded too: it uses bg-canvas/85 (a different class)
+     so it keeps its translucent blur. */
+  section.bg-canvas,
+  section.bg-cream,
+  footer.bg-canvas {
+    background-image: var(--surface-light);
+  }
+
+  section.bg-ink,
+  footer.bg-ink {
+    background-image: var(--surface-dark);
   }
 
   /* Body copy runs justified site-wide. Headlines are never <p>, so they keep
@@ -99,10 +138,10 @@
     position: absolute;
     cursor: pointer;
     inset: 0;
-    background-color: #eee;
+    background-color: #e8edf7;
     transition: 0.4s;
     border-radius: 0.5em;
-    box-shadow: 0 0.2em #dfd9d9;
+    box-shadow: 0 0.2em #cfd8ea;
   }
 
   .lang-slider::before {
@@ -113,19 +152,19 @@
     border-radius: 0.3em;
     left: 0.3em;
     bottom: 0.7em;
-    background-color: lightsalmon;
+    background-color: var(--muted);
     transition: 0.4s;
-    box-shadow: 0 0.4em #bcb4b4;
+    box-shadow: 0 0.4em #aab6cf;
   }
 
   .lang-slider:hover::before {
-    box-shadow: 0 0.2em #bcb4b4;
+    box-shadow: 0 0.2em #aab6cf;
     bottom: 0.5em;
   }
 
   .lang-switch input:checked + .lang-slider::before {
     transform: translateX(2em);
-    background: lightgreen;
+    background: var(--royal);
   }
 
   /* The stock markup collapses the input to 0×0, which also hides the focus

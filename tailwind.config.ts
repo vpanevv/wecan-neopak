@@ -8,19 +8,30 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      // Deep-blue gradient identity. Light surfaces run cool grey to blue,
+      // dark surfaces deep navy to a brighter blue; the gradients themselves
+      // live in globals.css, these are the flat stops behind them.
+      // The surface stops sit at the limit of what the text colours allow:
+      // every pair clears WCAG AA against the *far end* of its gradient, not
+      // just the flat stop, with a worst case of 4.52:1 (muted on canvas-deep).
       colors: {
-        // Warm off-white, never pure white
-        canvas: '#FAFAFA',
-        // Subtle cream for alternating sections
-        cream: '#F0EFEC',
-        // Near-black accent / dark sections
-        ink: '#0F1011',
-        // Muted text — tuned to pass WCAG AA (4.5:1) on the cream background
-        muted: '#64686C',
-        // Warm aluminum silver — references the product material
-        aluminum: '#B0B5B8',
-        // Vibrant industrial orange — used VERY sparingly
-        ember: '#E85D2F',
+        // Light gradient start — cool grey, as in the banner artwork
+        canvas: '#E8EBF0',
+        // Light gradient end — as deep as `muted` text can sit on (4.52:1)
+        'canvas-deep': '#B8C8E6',
+        // Panels and alternating sections
+        cream: '#D2DBEB',
+        // Near-black navy — body text
+        ink: '#0A1124',
+        // Dark gradient stops — deep blue rather than near-black
+        navy: '#0B2148',
+        royal: '#1B4A8F',
+        // Secondary text — AA on the light gradient through to its far end
+        muted: '#4A5466',
+        // Secondary text on dark surfaces
+        aluminum: '#BCC7DC',
+        // Single accent, used sparingly (was the old ember orange)
+        accent: '#2F4CA8',
       },
       fontFamily: {
         sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],

@@ -93,7 +93,7 @@ export default function LineFilm() {
           />
           <p className="film-caption absolute bottom-5 left-5 flex items-center gap-3 text-xs uppercase tracking-label text-canvas md:bottom-8 md:left-8">
             <span
-              className="inline-block h-2 w-2 animate-pulse rounded-full bg-ember"
+              className="inline-block h-2 w-2 animate-pulse rounded-full bg-accent"
               aria-hidden
             />
             {t.home.capacity.caption}

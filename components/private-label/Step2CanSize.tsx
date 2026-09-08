@@ -23,7 +23,7 @@ function SingleCan({ slim, tall }: { slim: number; tall: number }) {
           <stop offset="1" stopColor="#9aa0a4" />
         </linearGradient>
       </defs>
-      <ellipse cx={45} cy={132} rx={w / 2} ry={ry * 0.7} fill="rgba(15,16,17,0.1)" />
+      <ellipse cx={45} cy={132} rx={w / 2} ry={ry * 0.7} fill="rgba(10,17,36,0.1)" />
       <path
         d={`M ${x} ${yTop} L ${x} ${130} A ${w / 2} ${ry} 0 0 0 ${x + w} ${130} L ${x + w} ${yTop} A ${w / 2} ${ry} 0 0 1 ${x} ${yTop} Z`}
         fill={`url(#pl-can-${slim}-${tall})`}
@@ -34,7 +34,7 @@ function SingleCan({ slim, tall }: { slim: number; tall: number }) {
         cy={yTop}
         rx={w * 0.3}
         ry={ry * 0.4}
-        fill="rgba(15,16,17,0.1)"
+        fill="rgba(10,17,36,0.1)"
       />
     </svg>
   );
