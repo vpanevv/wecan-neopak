@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <title>Netlify form detection</title>
+  </head>
+  <body>
+    <!--
+      Not a user-facing page. Netlify discovers forms by parsing static HTML at
+      deploy time, and never runs JavaScript — so it cannot see the React form
+      on /contact. This file declares the same fields so the "contact" form is
+      registered; ContactForm.tsx then POSTs url-encoded data to
+      /__forms.html and Netlify records the submission.
+
+      Field names here MUST match the keys sent by ContactForm.tsx. Adding a
+      field to the form without adding it here means that value is silently
+      dropped from the notification email.
+    -->
+    <form name="contact" data-netlify="true" hidden>
+      <input type="hidden" name="form-name" value="contact" />
+      <input type="text" name="company" />
+      <input type="text" name="contactPerson" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <input type="text" name="country" />
+      <input type="text" name="beverageType" />
+      <input type="text" name="canSizes" />
+      <input type="text" name="decoration" />
+      <input type="text" name="quantity" />
+      <input type="text" name="timeline" />
+      <textarea name="description"></textarea>
+    </form>
+  </body>
+</html>

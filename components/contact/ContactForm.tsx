@@ -162,15 +162,68 @@ export default function ContactForm() {
     }
 
     setStatus('sending');
-    try {
-      const res = await fetch('/api/contact', {
+
+    // Netlify Forms is the delivery path: it records every submission in the
+    // dashboard and sends the notification emails, with no SMTP or MX
+    // dependency. It must be posted url-encoded to /__forms.html — see the
+    // comment in public/__forms.html for why that file exists.
+    const netlifyPayload = new URLSearchParams({
+      'form-name': 'contact',
+      company: values.company,
+      contactPerson: values.contactPerson,
+      email: values.email,
+      phone: values.phone,
+      country: values.country,
+      beverageType: values.beverageType,
+      // Flattened: url-encoded form data has no array type.
+      canSizes: values.canSizes.join(', '),
+      decoration: values.decoration,
+      quantity: values.quantity,
+      timeline: values.timeline,
+      description: values.description,
+    });
+
+    const postToApi = () =>
+      fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(values),
       });
-      if (!res.ok) throw new Error('Request failed');
-      setStatus('success');
+
+    let delivered = false;
+    try {
+      const res = await fetch('/__forms.html', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: netlifyPayload.toString(),
+      });
+      delivered = res.ok;
     } catch {
+      delivered = false;
+    }
+
+    if (delivered) {
+      // Netlify already has the submission. Fire the SMTP route without
+      // awaiting it — a misconfigured mail server takes ~10s to fail and must
+      // not stall, or sink, a submission that is already recorded. Drop this
+      // call if you would rather not get a second notification once SMTP
+      // delivers.
+      void postToApi().catch(() => {});
+    } else {
+      // No Netlify form handler in front of us — that is the normal case in
+      // local dev, where Next answers a POST to a static file with 405. Fall
+      // back to the API route and let it decide the outcome.
+      try {
+        const res = await postToApi();
+        delivered = res.ok;
+      } catch {
+        delivered = false;
+      }
+    }
+
+    if (delivered) {
+      setStatus('success');
+    } else {
       setStatus('idle');
       setError(f.errorSend);
     }
